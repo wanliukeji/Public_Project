@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>INDEX3.0</title>
+    <script src="/static/js/vue.min.js"></script>
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+<div id="box" v-cloak>
+    <button @click="postApiData">获取对象</button>
+    <button @click="postUsers">获取对象集合</button>
+    <p>{{ message }}</p>
+    <div>{{ user }}</div>
+    <div>{{users}}</div>
+    <hr>
+    <table>
+        <thead>
+        <tr>
+            <th>账号</th>
+            <th>密码</th>
+            <th>姓名</th>
+            <th>邮箱</th>
+            <th>电话</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="user in users">
+                <td>{{user.account}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.phone}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/vue-resource.min.js"></script>
+<!--<script src="/static/js/axios.min.js"></script>-->
+<script src="/static/js/index.js"></script>
+</body>
+</html>

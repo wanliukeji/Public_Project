@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="../js/index.js"></script>
+<body>
+<div id="box">
+    <p>{{ msg }}</p>
+</div>
+
+<script>
+
+    window.onload = function(){
+        var vm = new Vue({
+            el:'#box',
+            data:{
+                msg:'Hello World!',
+            },
+            methods:{
+                get:function(){
+                    //发送get请求
+                    this.$http.get('/login/getDate').then(function(res){
+                        document.write(res.body);
+                    },function(){
+                        console.log('请求失败处理');
+                    });
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
