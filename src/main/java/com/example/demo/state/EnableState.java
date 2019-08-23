@@ -7,16 +7,12 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * <pre>
- *
- * 描述：
- * 版本：
- * 日期：2019-06-06 08:35
- * 作者：Chenny
- * <br>修改记录
- * <br>修改日期        修改人          修改内容
- *
- * </pre>
+ * @author Chenny
+ * @version 1.0
+ * @date 2019/7/22 16:56
+ * @email bbc123good@163.com
+ * @address http://106.12.38.131:8011
+ * @describe 请求实体类
  */
 @Data
 @NoArgsConstructor

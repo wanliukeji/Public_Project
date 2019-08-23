@@ -1,8 +1,11 @@
 package com.example.demo.controller.sys;
 
+import com.example.demo.Utils.HttpServletRequestUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Chenny
@@ -13,10 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @describe 异常控制器
  */
 @Controller
-public class errorController {
+public class ErrorController {
 
     @GetMapping("/error")
     public ModelAndView error() {
-        return new ModelAndView("/error");
+        HttpServletRequest req = HttpServletRequestUtil.getRequest();
+        return new ModelAndView("error");
     }
 }

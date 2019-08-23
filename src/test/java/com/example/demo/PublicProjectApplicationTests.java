@@ -11,9 +11,6 @@ public class PublicProjectApplicationTests {
 
     @Test
     public void contextLoads() {
-        System.out.println(
-                "CHENYU"
-        );
-    }
 
+    }
 }

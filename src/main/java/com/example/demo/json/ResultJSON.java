@@ -7,10 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.Serializable;
 
 /**
- * 描述：
- * 版本：
- * 日期：2019/7/11 8:11
- * 作者：Chenny
+ * @author Chenny
+ * @version 1.0
+ * @date 2019/5/24 16:43
+ * @email bbc123good@163.com
+ * @address http://106.12.38.131:8011
+ * @describe 通用JSON格式响应类
  */
 @SuppressWarnings("ALL")
 @Slf4j

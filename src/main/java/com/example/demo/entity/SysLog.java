@@ -10,13 +10,15 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * 描述：
- * 版本：
- * 日期：2019/7/11 8:21
- * 作者：Chenny
+ * @author Chenny
+ * @version 1.0
+ * @date 2019/5/22 16:43
+ * @email bbc123good@163.com
+ * @address http://106.12.38.131:8011
+ * @describe 用于实现接口返回规范的类  所有接口返回值都由该类封装
  */
 @Data
-@TableName("tb_sys_log")
+@TableName("log")
 public class SysLog implements Serializable {
 
     private static final long serialVersionUID = -6775222679549090142L;

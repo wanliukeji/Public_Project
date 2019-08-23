@@ -1,6 +1,6 @@
 #服务配置
 server:
-  port: 1993
+  port: 7171
   tomcat:
     uri-encoding: UTF-8
   error:
@@ -8,7 +8,7 @@ server:
 spring:
     #数据配置
   datasource:
-    url: jdbc:mysql://localhost:3306/db_demo_kms?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://localhost:3306/public_poject?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -47,15 +47,39 @@ spring:
     cache: false
     suffix: .html
     prefix: classpath:/static/html/
-    mode: HTML5
+    mode: LEGACYHTML5
     enabled: true
     check-template-location: true
     encoding: UTF-8
   resoursces:
-    static-locations: classpath:/resources/,classpath:/static/,classpath:/static/css/,classpath:/static/js/
+    static-locations: classpath:/
+#    static-locations: classpath:/resources/,classpath:/static/,classpath:/static/css/,classpath:/static/js/,classpath:/templates/
  #启动对@AspectJ注解的支持
   aop:
     proxy-target-class: true
+
+# Redis 开启缓存配置详情
+# Redis服务器地址 localhost
+# Redis服务器连接端口 6379
+# Redis服务器连接密码（默认为空）
+# 连接池最大连接数（使用负值表示没有限制）
+# 连接池最大阻塞等待时间（使用负值表示没有限制）
+# 连接池中的最大空闲连接
+# 连接池中的最小空闲连接
+# 连接超时时间（毫秒）
+  redis:
+    host: localhost
+    database: 0
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: 1
+        max-idle: 8
+        min-idle: 0
+    timeout: 0
+
 #  jackson:
 #    mapper: true
 jackson:
@@ -69,29 +93,17 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
     cache-enabled: false
-#      global-config:
-#        db-config:
-#          field-strategy: not_empty
-#          id-type: auto
-#          db-type: mysql
-#          table-underline: true
-#          column-underline: true
-#          banner: false
-#          refresh: true
-#mybatis:
-#  mapper-locations: classpath:com/example/demo/dao/mapper/*Mapper.xml
-#  type-aliases-package: com.example.demo.entity
-#  executor-type: reuse
-#  configuration:
-#    map-underscore-to-camel-case: false
-#    cache-enabled: false
+#    引用mybatis配置文件
+#  config-location: classpath:mybatis-config.xml
 #分页插件插件配置
 pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-debug: true
+#debug: true
 logging.level.org.springframework.boot.autoconfigure: ERROR
 trace: false
-
+#引用日志配置文件
+logging:
+  config: classpath:logback-spring.xml

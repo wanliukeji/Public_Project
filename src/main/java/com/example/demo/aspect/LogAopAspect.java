@@ -1,7 +1,7 @@
 package com.example.demo.aspect;
 import java.lang.reflect.Method;
 import java.util.Date;
-import com.example.demo.Utils.HttpServletRequestUtils;
+import com.example.demo.Utils.HttpServletRequestUtil;
 import com.example.demo.Utils.StringUtil;
 import com.example.demo.entity.SysLog;
 import com.example.demo.entity.SysUser;
@@ -30,15 +30,12 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class LogAopAspect {
 
-
     @Autowired
     LogService logService;
 
-
-
-    //@Pointcut(value = "@annotation(com.example.demo.aspect.Log)")
     //声明切入点
     @Pointcut("execution(public * com.example.demo.api.*.*())")
+//    @Pointcut(value = "@annotation(com.example.demo.aspect.Log)")
     public void logPointCut() {
     }
 
@@ -71,16 +68,18 @@ public class LogAopAspect {
         // 请求的参数
         Object[] args = joinPoint.getArgs();
         sysLog.setStartTime(new Date());
-        HttpServletRequest req = HttpServletRequestUtils.getRequest();
+        HttpServletRequest req = HttpServletRequestUtil.getRequest();
         if (null != req){
             sysLog.setRemoteAddr(req.getRemoteAddr());
         }
         sysLog.setExecuteTime(time);
-        SysUser user = HttpServletRequestUtils.getSessionUser();
-        sysLog.setUserId(user.getId());
+        SysUser user = HttpServletRequestUtil.getSessionUser();
+        if (null != user){
+            sysLog.setUserId(user.getId()+"");
+        }
         sysLog.setLocation(req.getRequestURI());
         sysLog.setEndTime(new Date());
-        sysLog.setRequestUrl(req.getContextPath());
+        sysLog.setRequestUrl(req.getServerPort()+"");
         // 保存系统日志
         logService.save(sysLog);
         log.info(StringUtil.toString(sysLog));

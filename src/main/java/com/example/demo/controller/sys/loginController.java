@@ -1,13 +1,14 @@
 package com.example.demo.controller.sys;
-import com.example.demo.Utils.HttpServletRequestUtils;
-import com.example.demo.json.ApiJSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.demo.Utils.HttpServletRequestUtil;
+import com.example.demo.api.LoginApi;
+import com.example.demo.exception.CodeMsg;
 import com.example.demo.entity.SysUser;
+import com.example.demo.json.ResultJSON;
+import com.example.demo.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Chenny
@@ -19,37 +20,39 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RestController
 @Slf4j
-public class loginController {
+public class LoginController implements LoginApi {
+
+    @Autowired
+    private SysUserService sysUserService;
 
     /**
-     * 登录入口
+     * 登录口
+     * @param info
      * @return
      */
-    @GetMapping("/login")
-    public ModelAndView login() {
-        SysUser user = new SysUser();
-        user.setPassword("111111111");
-        user.setAccount("admin");
-        user.setName("chenny");
-        HttpServletRequestUtils.getRequest().getSession().setAttribute("user",user);
-        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>LOGIN<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-        return new ModelAndView("login");
-    }
-
-    @GetMapping(value = "/login/getDate")
-    @Transactional
-    public ApiJSON<SysUser> getDate(@RequestParam String name) {
+    @Override
+    public ResultJSON<Boolean> login(SysUser info) {
+        boolean flag = false;
         try {
-            SysUser user = new SysUser();
-            user.setPassword("111111111");
-            user.setAccount("admin");
-            user.setName("chenny");
-            HttpServletRequestUtils.getRequest().getSession().setAttribute("user",user);
-            return ApiJSON.data(user);
+            if (null != info){
+                SysUser user = sysUserService.getOne(new QueryWrapper<SysUser>().eq("account",info.getAccount()).eq("password",info.getPassword()));
+                if (null != user ){
+                    //解密
+                    //String pwd = EncryptUtil.Base64Decode(user.getPassword());
+                    if ( info.getPassword().equalsIgnoreCase(user.getPassword())){
+                        HttpServletRequestUtil.getRequest().getSession().setAttribute("user",user);
+                        return ResultJSON.success(true);
+                    }
+                }else {
+                    return ResultJSON.error(CodeMsg.SERVER_ERROR);
+                }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             log.error(ex.getMessage());
-            return ApiJSON.error("错啦");
+            return ResultJSON.error(CodeMsg.SERVER_ERROR);
         }
+        return ResultJSON.error(CodeMsg.SERVER_ERROR);
     }
+
 }
